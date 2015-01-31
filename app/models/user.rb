@@ -9,4 +9,7 @@ class User < ActiveRecord::Base
          :validatable,
          :confirmable,
          :lockable
+
+  belongs_to :role
+
 end
