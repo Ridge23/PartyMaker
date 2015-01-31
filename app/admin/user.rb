@@ -5,11 +5,10 @@ ActiveAdmin.register User do
     selectable_column
     id_column
     column :email
-    column :current_sign_in_at
-    column :sign_in_count
     column :created_at
     column :role
     column :country
+    column :city
     actions
   end
 
@@ -19,6 +18,7 @@ ActiveAdmin.register User do
   filter :created_at
   filter :role
   filter :country
+  filter :city
 
   form do |f|
     f.inputs "User Details" do
@@ -27,6 +27,7 @@ ActiveAdmin.register User do
       f.input :password_confirmation
       f.input :role
       f.input :country
+      f.input :city
     end
     f.actions
   end
