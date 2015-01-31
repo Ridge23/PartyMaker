@@ -1,5 +1,5 @@
-ActiveAdmin.register Role do
-  permit_params :name, :plain_name
+ActiveAdmin.register Country do
+  permit_params :name, :iso_name, :code, :enabled
 
   # See permitted parameters documentation:
   # https://github.com/activeadmin/activeadmin/blob/master/docs/2-resource-customization.md#setting-up-strong-parameters

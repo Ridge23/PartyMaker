@@ -10,6 +10,8 @@ class User < ActiveRecord::Base
          :confirmable,
          :lockable
 
-  belongs_to :role
+  belongs_to :role, foreign_key: :role_id, class_name: 'Role'
+  belongs_to :country
 
+  
 end

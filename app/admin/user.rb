@@ -1,5 +1,5 @@
 ActiveAdmin.register User do
-  permit_params :email, :password, :password_confirmation, :role
+  permit_params :email, :password, :password_confirmation, :role, :country
 
   index do
     selectable_column
@@ -9,6 +9,7 @@ ActiveAdmin.register User do
     column :sign_in_count
     column :created_at
     column :role
+    column :country
     actions
   end
 
@@ -16,6 +17,8 @@ ActiveAdmin.register User do
   filter :current_sign_in_at
   filter :sign_in_count
   filter :created_at
+  filter :role
+  filter :country
 
   form do |f|
     f.inputs "User Details" do
@@ -23,9 +26,22 @@ ActiveAdmin.register User do
       f.input :password
       f.input :password_confirmation
       f.input :role
+      f.input :country
     end
     f.actions
   end
 
+  controller do
+    def update
+      if params[:user][:password].blank? && params[:user][:password_confirmation].blank?
+        params[:user].delete("password")
+        params[:user].delete("password_confirmation")
+      end
+      super
+    end
 
+    def permitted_params
+      params.permit!
+    end
+  end
 end

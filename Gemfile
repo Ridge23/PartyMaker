@@ -28,6 +28,8 @@ gem 'spring',        group: :development
 
 gem 'devise'
 
+gem 'json', '~> 1.8.2'
+
 gem 'activeadmin', github: 'activeadmin'
 
 # Use ActiveModel has_secure_password
