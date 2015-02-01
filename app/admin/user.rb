@@ -1,6 +1,6 @@
 ActiveAdmin.register User do
   permit_params :email, :name, :password, :password_confirmation, :role, :country
-
+  menu priority: 120
   index do
     selectable_column
     id_column

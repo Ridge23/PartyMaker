@@ -1,6 +1,6 @@
 ActiveAdmin.register City do
   permit_params :name, :iso_name, :code, :enabled, :country
-
+  menu priority: 100
   index do
     selectable_column
     id_column
