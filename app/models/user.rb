@@ -13,6 +13,7 @@ class User < ActiveRecord::Base
   belongs_to :role, foreign_key: :role_id, class_name: 'Role'
   belongs_to :country
   belongs_to :city
+  has_many   :events
   has_and_belongs_to_many :genres
 
 end
