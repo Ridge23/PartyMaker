@@ -19,6 +19,7 @@ ActiveAdmin.register User do
   filter :role
   filter :country
   filter :city
+  filter :genres
 
   form do |f|
     f.inputs "User Details" do
@@ -29,6 +30,7 @@ ActiveAdmin.register User do
       f.input :role
       f.input :country
       f.input :city
+      f.input :genres
     end
     f.actions
   end
