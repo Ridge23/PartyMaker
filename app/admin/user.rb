@@ -1,13 +1,13 @@
 ActiveAdmin.register User do
-  permit_params :email, :name, :password, :password_confirmation, :role, :country, :city
+  permit_params :email, :name, :password, :password_confirmation, :role, :country, :city, :avatar
   menu priority: 120
   index do
     selectable_column
     id_column
     column :email
-    column :created_at
     column :role
     column :country
+    column :created_at
     actions
   end
 
@@ -31,8 +31,22 @@ ActiveAdmin.register User do
                       }
       f.input :city, collection: City.where(:country_id => user.country_id)
       f.input :genres
+      f.input :avatar, :required => false, :as => :file
     end
     f.actions
+  end
+
+  show do |ad|
+    attributes_table do
+      row :email
+      row :name
+      row :role
+      row :country
+      row :city
+      row :avatar do
+        image_tag(ad.avatar.url(:thumb))
+      end
+    end
   end
 
   controller do
