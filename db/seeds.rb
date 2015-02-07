@@ -41,25 +41,21 @@ ActiveRecord::Base.connection.execute('TRUNCATE ' + Country.table_name + ' RESTA
 
 countries_csv_path = File.join(Rails.root, 'db', 'GeoIPCountryWhois.csv')
 
-File.open(countries_csv_path).each do |line|
-  country_array = line.split(',')
-  if !Country.find_by_iso_name(country_array[4].gsub(/\s|"|'/, ''))
-    Country.create({ name: country_array[5].gsub(/\s|"|'/, ''), iso_name: country_array[4].gsub(/\s|"|'/, '')})
+CSV.foreach(countries_csv_path, :headers => true, :col_sep => ',') do |row|
+  if !Country.find_by_iso_name(row['iso'])
+    Country.create({ name: row['name'], iso_name: row['iso'] })
   end
 end
 
-ActiveRecord::Base.connection.execute('TRUNCATE ' + City.table_name + ' RESTART IDENTITY')
+ActiveRecord::Base.connection.execute('TRUNCATE ' + City.table_name + ' RESTART IDENTITY') #
 
 cities_csv_path = File.join(Rails.root, 'db', 'GeoLiteCity-Location.csv')
 
-File.open(cities_csv_path).each do |line|
-  if line
-    city_array = line.split(',')
-    if city_array[1] and city_array[3]
-      city_country = Country.find_by_iso_name(city_array[1].gsub(/\s|"|'/, ''))
-      if city_country
-        City.create({ name: city_array[3].gsub(/\s|"|'/, ''), country_id: city_country.id})
-      end
+CSV.foreach(cities_csv_path, :headers => true, :col_sep => ',') do |row|
+  if row['country'] and row['city']
+    city_country = Country.find_by_iso_name(row['country'])
+    if(city_country)
+      City.create({ name: row['city'], country_id: city_country.id })
     end
   end
 end

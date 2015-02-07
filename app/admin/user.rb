@@ -8,7 +8,6 @@ ActiveAdmin.register User do
     column :created_at
     column :role
     column :country
-    column :city
     actions
   end
 
@@ -18,7 +17,6 @@ ActiveAdmin.register User do
   filter :created_at
   filter :role
   filter :country
-  filter :city
   filter :genres
 
   form do |f|
@@ -28,8 +26,10 @@ ActiveAdmin.register User do
       f.input :password
       f.input :password_confirmation
       f.input :role
-      f.input :country
-      f.input :city
+      f.input :country, :input_html => {
+                          :onchange => remote_request(:get, dynamic_select_cities_path, { :country_id => "$('#user_country_id').val()" }, :user_city_id)
+                      }
+      f.input :city, collection: City.where(:country_id => user.country_id)
       f.input :genres
     end
     f.actions

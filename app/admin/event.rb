@@ -6,7 +6,6 @@ ActiveAdmin.register Event do
     id_column
     column :name
     column :country
-    column :city
     column :date
     column :created_at
     column :user
@@ -14,13 +13,20 @@ ActiveAdmin.register Event do
     actions
   end
 
+  filter :name
+  filter :country
+  filter :price
+
+
   form do |f|
     f.inputs "Event Details" do
       f.input :name
       f.input :description
       f.input :price
-      f.input :country
-      f.input :city
+      f.input :country, :input_html => {
+                          :onchange => remote_request(:get, dynamic_select_cities_path, { :country_id => "$('#event_country_id').val()" }, :event_city_id)
+                      }
+      f.input :city, collection: City.where(:country_id => event.country_id)
       f.input :date
       f.input :genres
       f.input :user
@@ -43,6 +49,11 @@ ActiveAdmin.register Event do
   controller do
     def permitted_params
       params.permit!
+    end
+
+    def change_cities
+      @cities = City.find_by_id(params[:country_id]).try(:cities)
+      render :text => view_context.options_from_collection_for_select(@cities, :id, :name)
     end
   end
 

@@ -11,6 +11,8 @@ Rails.application.routes.draw do
   # root 'welcome#index'
   root 'home#index'
 
+  get '/dynamic_selects/cities', to: 'dynamic_selects#cities', as: 'dynamic_select_cities'
+
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 
