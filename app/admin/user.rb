@@ -44,7 +44,7 @@ ActiveAdmin.register User do
       row :country
       row :city
       row :avatar do
-        image_tag(ad.avatar.url(:thumb))
+        image_tag(ad.avatar.url(:thumb), width: '100')
       end
     end
   end

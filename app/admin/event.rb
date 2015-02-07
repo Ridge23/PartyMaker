@@ -30,22 +30,26 @@ ActiveAdmin.register Event do
       f.input :date
       f.input :genres
       f.input :user
+      f.input :image, :required => false, :as => :file
     end
     f.actions
   end
 
-  # See permitted parameters documentation:
-  # https://github.com/activeadmin/activeadmin/blob/master/docs/2-resource-customization.md#setting-up-strong-parameters
-  #
-  # permit_params :list, :of, :attributes, :on, :model
-  #
-  # or
-  #
-  # permit_params do
-  #   permitted = [:permitted, :attributes]
-  #   permitted << :other if resource.something?
-  #   permitted
-  # end
+  show do |ad|
+    attributes_table do
+      row :name
+      row :description
+      row :price
+      row :country
+      row :city
+      row :date
+      row :user
+      row :image do
+        image_tag(ad.image.url(:thumb), width: '100')
+      end
+    end
+  end
+
   controller do
     def permitted_params
       params.permit!
